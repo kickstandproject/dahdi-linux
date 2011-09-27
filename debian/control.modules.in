@@ -1,13 +1,14 @@
 Source: dahdi-linux
 Section: comm
 Priority: extra
-Maintainer: Debian VoIP Team <pkg-voip-maintainers@lists.alioth.debian.org>
-Uploaders: Tzafrir Cohen <tzafrir@debian.org>, Mark Purcell <msp@debian.org>
-Build-Depends: debhelper (>> 7), bzip2
+Maintainer: Paul Belanger <paul.belanger@polybeacon.com>
+XSBC-Original-Maintainer: Debian VoIP Team <pkg-voip-maintainers@lists.alioth.debian.org>
+Build-Depends: debhelper (>> 7),
+ bzip2
 Standards-Version: 3.8.4
 Homepage: http://www.asterisk.org/
-Vcs-Svn: svn://svn.debian.org/pkg-voip/dahdi-linux/trunk/
-Vcs-Browser: http://svn.debian.org/wsvn/pkg-voip/dahdi-linux/?op=log
+Vcs-Git: git://github.com/kickstandproject/dahdi-linux.git
+Vcs-Browser: https://github.com/kickstandproject/dahdi-linux
 
 Package: dahdi-modules-_KVERS_
 Architecture: any

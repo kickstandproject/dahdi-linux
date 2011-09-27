@@ -6,7 +6,6 @@
 #export DH_VERBOSE=1
 
 # This is the debhelper compatibility version to use.
-USE_BRISTUFF=0
 export HOTPLUG_FIRMWARE=1
 
 -include /usr/share/quilt/quilt.make

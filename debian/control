@@ -1,19 +1,18 @@
 Source: dahdi-linux
 Section: comm
 Priority: optional
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Uploaders: Tzafrir Cohen <tzafrir@debian.org>, Mark Purcell <msp@debian.org>, Faidon Liambotis <paravoid@debian.org>
+Maintainer: Paul Belanger <paul.belanger@polybeacon.com>
 XSBC-Original-Maintainer: Debian VoIP Team <pkg-voip-maintainers@lists.alioth.debian.org>
-Build-Depends: debhelper (>= 7), bzip2, asciidoc
+Build-Depends: debhelper (>= 7),
+ bzip2,
+ asciidoc
 Standards-Version: 3.9.1
 Homepage: http://www.asterisk.org/
-Vcs-Svn: svn://svn.debian.org/pkg-voip/dahdi-linux/trunk/
-Vcs-Browser: http://svn.debian.org/wsvn/pkg-voip/dahdi-linux/?op=log
+Vcs-Git: git://github.com/kickstandproject/dahdi-linux.git
+Vcs-Browser: https://github.com/kickstandproject/dahdi-linux
 
 Package: dahdi-linux
 Architecture: all
-# Xorcom packages depend on dahdi-firmware. Debian zaptel will probably 
-# just recommend it.
 Depends: dahdi-dkms | dahdi-source, ${shlibs:Depends}, ${misc:Depends}, procps, fxload
 Replaces: zaptel
 Conflicts: zaptel
