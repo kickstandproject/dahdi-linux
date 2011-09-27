@@ -1,0 +1,6 @@
+drivers/dahdi/xpp/xpp.conf	etc/dahdi
+drivers/dahdi/xpp/xpp.rules	lib/udev/rules.d
+drivers/dahdi/xpp/init_card_*	usr/share/dahdi/
+drivers/dahdi/xpp/XppConfig.pm	usr/share/dahdi/
+debian/modules etc/dahdi
+debian/system.conf etc/dahdi

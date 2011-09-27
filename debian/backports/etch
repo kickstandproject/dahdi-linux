@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Etch has an older debhelper:
+sed -i -e '/^Build-Depends:/s/\(debhelper\) ([^)]*),/\1,/' debian/control
+echo 5 >debian/compat

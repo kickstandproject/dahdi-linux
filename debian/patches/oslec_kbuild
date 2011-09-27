@@ -1,0 +1,12 @@
+Add a Kbuild file to oslec. It has a very similar Makefile
+but in it, the build is conditioned on a certain Kconfig variable.
+
+--- /dev/null
++++ b/drivers/staging/echo/Kbuild
+@@ -0,0 +1,6 @@
++ifdef DAHDI_USE_MMX
++EXTRA_CFLAGSi += USE_MMX
++endif
++
++# An explicit 'obj-m' , unlike the Makefile
++obj-m += echo.o

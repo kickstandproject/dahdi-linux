@@ -1,0 +1,7 @@
+oslec_auto
+# Mega-patch of extra drivers:
+dahdi_linux_extra
+no_firmware_download
+chanmute
+wcb4xxp_bn4s0e
+define_spinlock

@@ -1,0 +1,120 @@
+Building kernel modules
+-----------------------
+First, install dahdi-source package if you have not yet done so.
+
+You can build and install the modules package (as root) with the 
+following command:
+# module-assistant a-i dahdi
+
+It may be handy (for e.g., testing purposes) to build the module packages
+for all of the kernel-header packages installed on your system. Something 
+in the lines of:
+
+  m-a -u . -t -i -f -k "`echo usr/src/kernel-headers-*`" build dahdi
+
+You can also use the environment variable TARBALL to build the modules 
+with a custom dahdi.tar.bz2 tarball with some local modifications.
+
+
+Device Files
+------------
+DAHDI uses device files with major number 196 under /dev/dahdi/. In
+Debian all of those files are 0660 and owned by the group dialout. They
+should normally created by udev.
+
+If you can't generate device files with udev, use the script 
+make_static_nodes in the examples directory of dahdi-linux. Please also 
+let us know that generating static file is actually needed.
+
+
+
+
+Removed VPMADT032 Support
+-------------------------
+VPMADT032 is a hardware echo canceller module. It is an optional addon
+in various Digium cards. Currently in those serviced by wcte12xp and
+wctdm24xxp. As of DAHDI 2.2 using it requires a binary-only object file
+to be linked with DAHDI at build time. This object file is downloaded at
+build time from downloads.digium.com . This is naturally not something we
+can support. And thus we disabled building it.
+
+Unlike the Digium firmwares, this is not something that can be reverted at
+run-time.
+
+
+Bristuff
+--------
+No longer needed and used. Note that all the BRI drivers now use 
+'hardhdlc' rather than 'dchan' in system.conf. dahdi_genconf should
+generate a proper configuration for that.
+
+zaphfc included in this version is a newly-maintained version based on
+vzaphfc.
+
+All of those modules should work with either bristuffed Asterisk (if it 
+is Asterisk >= 1.4.22) or with Asterisk 1.6.x (libpri >= 1.4.4).
+
+
+Echo Canceller
+--------------
+Open Source Line Echo Canceller (OSLEC) is an alternative echo canceller 
+developed outside the main Zaptel tree. It is currently labelled "Beta".
+For more information see http://www.rowetel.com/ucasterisk/oslec.html .
+It generally works much better than the default upstream echo canceller
+(MG2). On the downside, it has a higher CPU consumption.
+
+The version of OSLEC included is currently one from the staging directory.
+This is done temporarily until that driver will find its way into the 
+mainline tree and to help test it.
+
+According to early tests by OSLEC users, the default Asterisk echo
+canceller size of 128 taps (16ms) should be good enough for most
+installations, and 256 taps (32 ms) should cover just about any case. 
+For phones connected to FXS ports you can use substatially lower values
+in order to reduce CPU consumption. e.g: 8ms or even 4 ms (64 taps or 32
+taps).
+
+Setting the number of taps for a channel in Asterisk's chan_zap is done
+using the following in Asterisk's zapata.conf: 
+
+  echocancell=NNN
+
+where NNN is the number of taps. See Asterisk sample zapata.conf .
+
+
+Build-time Tests
+----------------
+One sanity check to run when making changes in the package is to make
+(besides the usual lintian/linda) is to make sure that the modules
+packages still builds.
+
+For this to work you should first have a version of dahdi-source
+installed (any version. modules-assitant needs a few files from it in
+place). This allows you to use the script debian/modulestest as a
+post-build hook:
+
+  svn-buildpackage --svn-postbuild='debian/modulestest -r' --svn-ignore-new -uc -us 
+
+This will rebuild the zaptel-modules for your current kernel, or spend
+much more time with:
+
+  svn-buildpackage --svn-postbuild='debian/modulestest -a' --svn-ignore-new -uc -us 
+
+to build dahdi-modules for all of your currently-installed
+zaptel-modules packages. The log from the build will go to the file
+zaptel-modules-build-<version>.log in the build-area directory. e.g:  
+zaptel-modules-build-1.4.7~dfsg-1.log . 
+
+The script should also run ls for the module packages built. You should 
+chack that all packages were indeed built and that their size looks sane
+(no driver was left unbuilt).
+
+
+DAHDI-dummy
+-----------
+The core DAHDI module (dahdi) will now provide timing if there's no other
+module to provide timing. This means there's no more need for a separate
+dahdi_dummy module. For the sake of backward compatibility, the module
+dahdi itself also has an alias 'dahdi_dummy', which means that
+'modprobe dahdi_dummy' will still work.
+

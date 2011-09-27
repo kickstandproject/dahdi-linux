@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Lenny backporting script
+
+# udev rules go to /etc/udev in Lenny
+sed -i -e '/xpp.rules/s/lib/etc/'    debian/dahdi-linux.install
+

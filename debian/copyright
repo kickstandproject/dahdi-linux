@@ -1,0 +1,185 @@
+This package was debianized by Matt Zimmerman <mdz@debian.org> on
+Mon, 17 Jun 2002 10:31:21 -0400.
+
+It was downloaded from
+  http://downloads.asterisk.org/pub/telephony/dahdi-linux/
+
+The DAHDI-extra patch was generated from the repository:
+  http://git.tzafrir.org.il/?p=dahdi-extra.git;a=summary
+  http://git.tzafrir.org.il/git/dahdi-extra.git
+
+DAHDI-extra includes the following:
+
+* drivers/staging/echo: echo.ko (OSLEC)
+* drivers/dahdi/opvxa1200.c: opvxa1200.ko (OpenVox A800P/A1200P)
+* drivers/dahdi/wcopenpci.c: wcopenpci.ko (Voicetronix OpenPCI)
+* drivers/dahdi/zaphfc/: zaphfc.c (HFC-S-based PCI cards)
+
+Upstream source has been modified to comply with the Debian Free 
+Software Guildlines (DFSG), by the removal of the firmware files:
+
+    drivers/dahdi/xpp/firmwares/*.hex
+
+drivers/dahdi/xpp/firmwares/LICENSE.firmware permits redistribution but
+does not mention modification, which is a requirement of Debian Policy
+2.1 ("Derived works").
+
+
+Summary:
+The bulk of the code, under drivers/dahdi/ , is licensed under the terms
+of GPLv2. Various drivers (e.g.: all non-Digium drivers) are licensed as
+GPLv2.+ . Two other files (mmx.h, XppConfig.pm) are licensed under a more
+permissive license.
+
+
+Upstream Authors: Jim Dixon / Zapate Telephony, Linux Support Services, Inc.
+
+Copyright (from drivers/dahdi/tor2.c):
+
+/*
+ * Tormenta 2  Quad-T1 PCI Driver
+ *
+ * Written by Mark Spencer <markster@digium.com>
+ * Based on previous works, designs, and archetectures conceived and
+ * written by Jim Dixon <jim@lambdatel.com>.
+ *
+ * Copyright (C) 2001 Jim Dixon / Zapata Telephony.
+ * Copyright (C) 2001-2008, Digium, Inc.
+ *
+ */
+
+/*
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2 as published by the
+ * Free Software Foundation. See the LICENSE file included with
+ * this program for more details.
+ */
+
+The file LICENSE is a verbatim copy of the GNU General Public License, v.2.
+
+On Debian systems, a copy of the GNU General Public License v.2 may be
+found in /usr/share/common-licenses/GPL-2.
+
+Other Portions:
+
+drivers/dahdi/octapi: GPLv.2+
+
+    Copyright (c) 2001-2007 Octasic Inc.
+
+This file is part of the Octasic OCT6100 GPL API . The OCT6100 GPL API  is 
+free software; you can redistribute it and/or modify it under the terms of 
+the GNU General Public License as published by the Free Software Foundation; 
+either version 2 of the License, or (at your option) any later version.
+
+The OCT6100 GPL API is distributed in the hope that it will be useful, but 
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
+for more details. 
+
+You should have received a copy of the GNU General Public License 
+along with the OCT6100 GPL API; if not, write to the Free Software 
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
+drivers/dahdi/datamods/syncppp.c: GPLv.2+
+
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU General Public License
+ *	as published by the Free Software Foundation; either version
+ *	2 of the license, or (at your option) any later version.
+ *
+ *	Port for Linux-2.1 by Jan "Yenya" Kasprzak <kas@fi.muni.cz>
+ * Copyright (C) 1994 Cronyx Ltd.
+ * Author: Serge Vakulenko, <vak@zebub.msk.su>
+
+drivers/dahdi/wcopenpci.c: GPLv.2+
+ * Written by Mark Spencer <markster@linux-support.net>
+ *            Matthew Fredrickson <creslin@linux-support.net>
+ *            Ben Kramer <ben@voicetronix.com.au>
+ *            Ron Lee <ron@voicetronix.com.au>
+ *
+ * Copyright (C) 2001, Linux Support Services, Inc.
+ * Copyright (C) 2005 - 2007, Voicetronix
+ *
+ * All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+
+
+drivers/dahdi/opvxa1200.c: GPLv.2+
+ * Modify from wctdm.c by MiaoLin<miaolin@openvox.com.cn>
+ *
+ * All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+
+drivers/dahdi/zaphfc/*: GPLv.2
+ * Dahdi rewrite in hardhdlc mode
+ * Jose A. Deniz <odicha@hotmail.com>
+ *
+ * Copyright (C) 2009, Jose A. Deniz
+ * Copyright (C) 2006, headiisue GmbH; Jens Wilke
+ * Copyright (C) 2004 Daniele Orlandi
+ * Copyright (C) 2002, 2003, 2004, Junghanns.NET GmbH
+ *
+ * Jens Wilke <jw_vzaphfc@headissue.com>
+ *
+ * Original author of this code is
+ * Daniele "Vihai" Orlandi <daniele@orlandi.com>
+ *
+ * Major rewrite of the driver made by
+ * Klaus-Peter Junghanns <kpj@junghanns.net>
+ *
+ * This program is free software and may be modified and
+ * distributed under the terms of the GNU Public License.
+
+
+
+drivers/dahdi/xpp/XppConfig.pm: GPL 1+ || Artistic
+
+# Written by Oron Peled <oron@actcom.co.il>
+# Copyright (C) 2008, Xorcom
+# This program is free software; you can redistribute and/or
+# modify it under the same terms as Perl itself.
+
+
+drivers/staging/echo/mmx.h:
+
+ * Copyright (C) 1997-2001 H. Dietz and R. Fisher
+ *
+ * This file is part of FFmpeg.
+ *
+ * FFmpeg is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * FFmpeg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+
+
+Other copyright holders:
+
+drivers/dahdi/dahdi_dummy.c:  * Copyright (C) 2002, Hermes Softlab
+
+drivers/dahdi/dahdi_echocan_sec2.c: Copyright (C) 2001 Steve Underwood
+drivers/dahdi/dahdi_echocan_sec.c: Copyright (C) 2001 Steve Underwood
+drivers/dahdi/ecdis.h: Copyright (C) 2001 Steve Underwood
+drivers/dahdi/datamods/hdlc_*.c: * Copyright (C) 1999 - 2005 Krzysztof Halasa <khc@pm.waw.pl>
+
+Other files under drivers/staging/echo/: 
+Copyright (C) 2001, 2003 Steve Underwood, 2007,2008 David Rowe

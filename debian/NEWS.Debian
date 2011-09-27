@@ -1,0 +1,13 @@
+zaptel (1:1.4.10~dfsg-1) unstable; urgency=low
+
+  Certain versions of Zaptel introduce incompatibilities between older kernel
+  modules and newer userspace programs. If programs such as ztcfg or asterisk
+  fail talking with Zaptel kernel with error 25 (ENOTTY: "Inappropriate ioctl
+  for this device") then you should upgrade the Zaptel modules by e.g: 
+  'm-a a-i zaptel' and reload drivers. 
+  .
+  The version of the currently running Zaptel is in 
+  /sys/module/zaptel/version .
+
+ -- Tzafrir Cohen <tzafrir.cohen@xorcom.com>  Thu, 20 Mar 2008 16:31:25 +0200
+
