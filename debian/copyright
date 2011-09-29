@@ -99,8 +99,6 @@ drivers/dahdi/xpp/XppConfig.pm: GPL 1+ || Artistic
 
 Other copyright holders:
 
-drivers/dahdi/dahdi_dummy.c:  * Copyright (C) 2002, Hermes Softlab
-
 drivers/dahdi/dahdi_echocan_sec2.c: Copyright (C) 2001 Steve Underwood
 drivers/dahdi/dahdi_echocan_sec.c: Copyright (C) 2001 Steve Underwood
 drivers/dahdi/ecdis.h: Copyright (C) 2001 Steve Underwood

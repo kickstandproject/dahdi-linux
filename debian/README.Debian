@@ -77,13 +77,3 @@ zaptel-modules-build-1.4.7~dfsg-1.log .
 The script should also run ls for the module packages built. You should 
 chack that all packages were indeed built and that their size looks sane
 (no driver was left unbuilt).
-
-
-DAHDI-dummy
------------
-The core DAHDI module (dahdi) will now provide timing if there's no other
-module to provide timing. This means there's no more need for a separate
-dahdi_dummy module. For the sake of backward compatibility, the module
-dahdi itself also has an alias 'dahdi_dummy', which means that
-'modprobe dahdi_dummy' will still work.
-
