@@ -11,8 +11,6 @@ The DAHDI-extra patch was generated from the repository:
 DAHDI-extra includes the following:
 
 * drivers/staging/echo: echo.ko (OSLEC)
-* drivers/dahdi/opvxa1200.c: opvxa1200.ko (OpenVox A800P/A1200P)
-* drivers/dahdi/wcopenpci.c: wcopenpci.ko (Voicetronix OpenPCI)
 * drivers/dahdi/zaphfc/: zaphfc.c (HFC-S-based PCI cards)
 
 Upstream source has been modified to comply with the Debian Free 
@@ -97,33 +95,6 @@ drivers/dahdi/datamods/syncppp.c: GPLv.2+
  *	Port for Linux-2.1 by Jan "Yenya" Kasprzak <kas@fi.muni.cz>
  * Copyright (C) 1994 Cronyx Ltd.
  * Author: Serge Vakulenko, <vak@zebub.msk.su>
-
-drivers/dahdi/wcopenpci.c: GPLv.2+
- * Written by Mark Spencer <markster@linux-support.net>
- *            Matthew Fredrickson <creslin@linux-support.net>
- *            Ben Kramer <ben@voicetronix.com.au>
- *            Ron Lee <ron@voicetronix.com.au>
- *
- * Copyright (C) 2001, Linux Support Services, Inc.
- * Copyright (C) 2005 - 2007, Voicetronix
- *
- * All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
-
-
-drivers/dahdi/opvxa1200.c: GPLv.2+
- * Modify from wctdm.c by MiaoLin<miaolin@openvox.com.cn>
- *
- * All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
 
 drivers/dahdi/zaphfc/*: GPLv.2
  * Dahdi rewrite in hardhdlc mode

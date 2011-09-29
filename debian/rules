@@ -45,12 +45,6 @@ URL := http://downloads.asterisk.org/pub/telephony/$(PACKAGE_SRC)/releases/$(PAC
 # the generated headers as part of the source:
 GENERATED_SOURCES := include/dahdi/version.h
 
-EXTRA_MODS=opvxa1200
-
-ifneq (,$(filter-out powerpc m68k armeb mips,$(shell dpkg-architecture -qDEB_HOST_ARCH)))
-EXTRA_MODS += wcopenpci
-endif
-
 EXTRA_SUBDIRS += zaphfc ../staging/echo
 EXTRA_MODS += dahdi_echocan_oslec
 
@@ -94,7 +88,7 @@ build-stamp:
 		debian/dkms.conf.in > debian/dkms.conf
 	sed -e "s|#CVERSION#|$(CVERSION)|"   \
 		debian/dahdi-dkms.install.in > debian/dahdi-dkms.install
-	
+
 	$(MAKE) docs
 	for mod in $(BRISTUFF_MODULES); do for i in c h; do \
 		ln -s $$mod/$$mod.$$i drivers/dahdi/$$mod.$$i; \
@@ -111,7 +105,7 @@ clean-unpatched:
 	#Delete the generated dkms files
 	rm -f debian/dahdi-dkms.install
 	rm -f debian/dkms.conf
-	
+
 	# Delete the generated bristuff symlinks:
 	$(RM) -f $(BRISTUFF_MODULES:%=%.[ch])
 	# Add here commands to clean up after the build process.
@@ -173,10 +167,6 @@ print-version:
 	@@echo "Debian version:          $(DEBVERSION)"
 	@@echo "Upstream version:        $(UPVERSION)"
 
-# For the record: updating openvox drivers:
-# wget 'http://www.openvox.cn/viewvc/dahdi/trunk/opvxa1200.c?view=co' \
-#  | sed -e '\r$//' >drivers/dahdi/opvxa1200.c
-#
 # Updating the zaphfc drivers:
 #   rm -rf old new
 #   mkdir -p old new/drivers/dahdi
