@@ -2,7 +2,7 @@ PACKAGE_VERSION="#CVERSION#"
 
 # Items below here should not have to change with each driver version
 PACKAGE_NAME="dahdi"
-MAKE[0]="(make modules KERNVER=$kernelver MODULES_EXTRA='dahdi_dummy dahdi_echocan_oslec' SUBDIRS_EXTRA='../staging/echo zaphfc/' ;make;make firmware-loaders;echo : > drivers/dahdi/vpmadt032_loader/.vpmadt032_x86_32.o.cmd;echo : > drivers/dahdi/vpmadt032_loader/.vpmadt032_x86_64.o.cmd;make)"
+MAKE[0]="(make modules KERNVER=$kernelver MODULES_EXTRA='dahdi_dummy' ;make;make firmware-loaders;echo : > drivers/dahdi/vpmadt032_loader/.vpmadt032_x86_32.o.cmd;echo : > drivers/dahdi/vpmadt032_loader/.vpmadt032_x86_64.o.cmd;make)"
 #Do not make clean, because Sangoma drivers need Module.symvers
 CLEAN="/bin/true"
 #CLEAN="make KERNVER=$kernelver clean"
@@ -127,20 +127,8 @@ BUILT_MODULE_LOCATION[28]="drivers/dahdi/voicebus/"
 DEST_MODULE_LOCATION[28]="/kernel/drivers/telephony/dahdi/voicebus"
 
 #Added by Debian / Ubuntu 
-BUILT_MODULE_NAME[29]="dahdi_echocan_oslec"
+BUILT_MODULE_NAME[29]="dahdi_vpmadt032_loader"
 BUILT_MODULE_LOCATION[29]="drivers/dahdi/"
 DEST_MODULE_LOCATION[29]="/kernel/drivers/telephony/dahdi"
-
-BUILT_MODULE_NAME[30]="echo"
-BUILT_MODULE_LOCATION[30]="drivers/staging/echo/"
-DEST_MODULE_LOCATION[30]="/kernel/drivers/telephony/staging/echo"
-
-BUILT_MODULE_NAME[31]="zaphfc"
-BUILT_MODULE_LOCATION[31]="drivers/dahdi/zaphfc"
-DEST_MODULE_LOCATION[31]="/kernel/drivers/telephony/dahdi/zaphfc"
-
-BUILT_MODULE_NAME[32]="dahdi_vpmadt032_loader"
-BUILT_MODULE_LOCATION[32]="drivers/dahdi/"
-DEST_MODULE_LOCATION[32]="/kernel/drivers/telephony/dahdi"
 
 AUTOINSTALL=yes

@@ -45,11 +45,6 @@ URL := http://downloads.asterisk.org/pub/telephony/$(PACKAGE_SRC)/releases/$(PAC
 # the generated headers as part of the source:
 GENERATED_SOURCES := include/dahdi/version.h
 
-EXTRA_SUBDIRS += zaphfc ../staging/echo
-EXTRA_MODS += dahdi_echocan_oslec
-
-MOD_ARGS=MODULES_EXTRA="$(EXTRA_MODS)" SUBDIRS_EXTRA="$(EXTRA_SUBDIRS)"
-
 kdist_clean: clean-unpatched
 
 kdist_config: prep-deb-files
@@ -59,8 +54,6 @@ binary-modules: prep-deb-files
 	dh_testroot
 	dh_prep
 	#cp -a $(CURDIR)/debian/generated/* .
-	make $(MOD_ARGS) modules KERNEL_SOURCES=$(KSRC) MODVERSIONS=detect KERNEL=linux-$(KVERS) 
-	make $(MOD_ARGS) install-modules KERNELRELEASE=$(KVERS) DESTDIR=$(CURDIR)/debian/$(PKGNAME)
 ifeq (2.6,$(shell echo $(KVERS) | cut -d. -f1-2))
 	# The 2.6 modules are way too big. This is only in kernel 2.6
 	find debian/$(PKGNAME)/lib/modules -name '*.ko' |xargs strip -g
@@ -166,13 +159,6 @@ binary: install
 print-version:
 	@@echo "Debian version:          $(DEBVERSION)"
 	@@echo "Upstream version:        $(UPVERSION)"
-
-# Updating the zaphfc drivers:
-#   rm -rf old new
-#   mkdir -p old new/drivers/dahdi
-#   svn export http://zaphfc.googlecode.com/svn/branches/2.2/zaphfc/ new/drivers/dahdi/zaphfc
-#   diff -Npur  --no-timestamps old new >debian/patches/zaphfc
-#   rm -rf old new
 
 TARBALL_DIR=../tarballs/$(PACKAGE_SRC)-$(UPVERSION).tmp
 get-orig-source:

@@ -48,39 +48,8 @@ No longer needed and used. Note that all the BRI drivers now use
 'hardhdlc' rather than 'dchan' in system.conf. dahdi_genconf should
 generate a proper configuration for that.
 
-zaphfc included in this version is a newly-maintained version based on
-vzaphfc.
-
 All of those modules should work with either bristuffed Asterisk (if it 
 is Asterisk >= 1.4.22) or with Asterisk 1.6.x (libpri >= 1.4.4).
-
-
-Echo Canceller
---------------
-Open Source Line Echo Canceller (OSLEC) is an alternative echo canceller 
-developed outside the main Zaptel tree. It is currently labelled "Beta".
-For more information see http://www.rowetel.com/ucasterisk/oslec.html .
-It generally works much better than the default upstream echo canceller
-(MG2). On the downside, it has a higher CPU consumption.
-
-The version of OSLEC included is currently one from the staging directory.
-This is done temporarily until that driver will find its way into the 
-mainline tree and to help test it.
-
-According to early tests by OSLEC users, the default Asterisk echo
-canceller size of 128 taps (16ms) should be good enough for most
-installations, and 256 taps (32 ms) should cover just about any case. 
-For phones connected to FXS ports you can use substatially lower values
-in order to reduce CPU consumption. e.g: 8ms or even 4 ms (64 taps or 32
-taps).
-
-Setting the number of taps for a channel in Asterisk's chan_zap is done
-using the following in Asterisk's zapata.conf: 
-
-  echocancell=NNN
-
-where NNN is the number of taps. See Asterisk sample zapata.conf .
-
 
 Build-time Tests
 ----------------
