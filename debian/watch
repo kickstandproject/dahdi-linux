@@ -2,5 +2,3 @@ version=3
 opts=uversionmangle=s/\-rc/~rc/,dversionmangle=s/\+dfsg//; \
 	http://downloads.asterisk.org/pub/telephony/dahdi-linux/releases/dahdi-linux-(.*)\.tar\.gz\
 	debian svn-upgrade
-
-
