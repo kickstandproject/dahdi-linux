@@ -1,5 +1,5 @@
-dahdi-linux (1:2.4.1+dfsg-1kickstand0+1) UNRELEASED; urgency=low
+dahdi-linux (2:2.5.0.1-1kickstand0) UNRELEASED; urgency=low
 
-  * Initial Release (Imported from Ubuntu Oneiric).
+  * Initial Release.
 
- -- Paul Belanger <paul.belanger@polybeacon.com>  Tue, 27 Sep 2011 14:52:07 -0400
+ -- Paul Belanger <paul.belanger@polybeacon.com>  Sat, 11 Feb 2012 17:23:49 -0500

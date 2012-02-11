@@ -1,14 +1,8 @@
 #!/usr/bin/make -f
-# Sample debian/rules that uses debhelper.
-# GNU copyright 1997 to 1999 by Joey Hess.
-
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-# This is the debhelper compatibility version to use.
 export HOTPLUG_FIRMWARE=1
-
--include /usr/share/quilt/quilt.make
 
 ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -g
@@ -22,21 +16,17 @@ PACKAGE:=$(PREFIX)-modules
 PACKAGE_SRC:=$(PREFIX)-linux
 # modifieable for experiments or debugging m-a
 MA_DIR ?= /usr/share/modass
-# load generic variable handling
--include $(MA_DIR)/include/generic.make
-# load default rules
--include $(MA_DIR)/include/common-rules.make
 
-DEBVERSION:=$(shell head -n 1 debian/changelog \
-		    | sed -e 's/^[^(]*(\([^)]*\)).*/\1/')
-DEB_BASE_VERSION:=$(shell echo $(DEBVERSION) | sed -e 's/^.*://' -e 's/-[0-9~.a-z]*$$//')
-UPVERSION:=$(shell echo $(DEB_BASE_VERSION) | sed -e 's/[~+]dfsg\(~\|$$\)/\1/' -e 's/~\(rc\|beta\)/-\1/')
+DEBVERSION:=$(shell dpkg-parsechangelog | sed -n -e 's/Version: //p')
+DEB_NOEPOCH_VERSION:=$(shell echo $(DEBVERSION) | cut -d':' -f 2)
+DEB_SRC_VERSION:=$(shell echo $(DEB_NOEPOCH_VERSION) | sed -e 's/-[^-]\+$$//')
+UPVERSION:=$(shell echo $(DEB_SRC_VERSION) | sed -e 's/[~+]dfsg\(~\|$$\)/\1/' -e 's/~\(rc\|beta\)/-\1/')
 
 # For DKMS. Use the full release (e.g.: 2.2.1+dfsg-1ubuntu1)
 CVERSION := $(shell dpkg-parsechangelog | grep '^Version:' | cut -d' ' -f2 | cut -d\: -f2)
 
 UPFILENAME := $(PACKAGE_SRC)_$(UPVERSION).orig.tar.gz
-FILENAME := $(PACKAGE_SRC)_$(DEB_BASE_VERSION).orig.tar.gz
+FILENAME := $(PACKAGE_SRC)_$(DEB_SRC_VERSION).orig.tar.gz
 URL := http://downloads.asterisk.org/pub/telephony/$(PACKAGE_SRC)/releases/$(PACKAGE_SRC)-$(UPVERSION).tar.gz
 
 # If the makefile was properly-writen, there was a good separation 
@@ -45,7 +35,10 @@ URL := http://downloads.asterisk.org/pub/telephony/$(PACKAGE_SRC)/releases/$(PAC
 # the generated headers as part of the source:
 GENERATED_SOURCES := include/dahdi/version.h
 
-kdist_clean: clean-unpatched
+%:
+	dh $@
+
+kdist_clean: clean
 
 kdist_config: prep-deb-files
 
@@ -54,6 +47,8 @@ binary-modules: prep-deb-files
 	dh_testroot
 	dh_prep
 	#cp -a $(CURDIR)/debian/generated/* .
+	make modules KERNEL_SOURCES=$(KSRC) MODVERSIONS=detect KERNEL=linux-$(KVERS) 
+	make install-modules KERNELRELEASE=$(KVERS) DESTDIR=$(CURDIR)/debian/$(PKGNAME)
 ifeq (2.6,$(shell echo $(KVERS) | cut -d. -f1-2))
 	# The 2.6 modules are way too big. This is only in kernel 2.6
 	find debian/$(PKGNAME)/lib/modules -name '*.ko' |xargs strip -g
@@ -72,9 +67,7 @@ endif
 
 ## END OF M-A SECTION
 
-build: patch build-stamp
-build-stamp: 
-	dh_testdir
+override_dh_auto_build:
 
 	# For DKMS
 	sed -e "s|#CVERSION#|$(CVERSION)|"   \
@@ -83,43 +76,23 @@ build-stamp:
 		debian/dahdi-dkms.install.in > debian/dahdi-dkms.install
 
 	$(MAKE) docs
-	for mod in $(BRISTUFF_MODULES); do for i in c h; do \
-		ln -s $$mod/$$mod.$$i drivers/dahdi/$$mod.$$i; \
-	done; done
 	$(MAKE) $(GENERATED_SOURCES)
-	touch $@
 
-clean: clean-unpatched unpatch
-clean-unpatched:
-	dh_testdir
-	dh_testroot
-	rm -f *-stamp
-
+override_dh_auto_clean:
 	#Delete the generated dkms files
 	rm -f debian/dahdi-dkms.install
 	rm -f debian/dkms.conf
-
-	# Delete the generated bristuff symlinks:
-	$(RM) -f $(BRISTUFF_MODULES:%=%.[ch])
-	# Add here commands to clean up after the build process.
 	rm -f $(GENERATED_SOURCES)
-	# * Makefile does not exist when running svn-buildpackage
-	#   as the source tree is not there.
-	# FIXME: This will fail with an ugly warning on the clean of the
-	# modules build. However only fter the actuual clean.
 	rm -f dahdi/include/version.h
 	[ ! -f Makefile ] || $(MAKE) dist-clean || true
-	dh_clean
 
 TARPARDIR=$(CURDIR)/debian/tmp
 TARDIR=$(TARPARDIR)/modules/$(PREFIX)
-install: build-stamp
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
-	
+
+override_dh_auto_install:
 	$(MAKE) install-include DESTDIR=$(CURDIR)/debian/$(SKPG)
+
+override_dh_install:
 	dh_install
 	# driver source code
 	mkdir -p $(TARDIR)/debian/generated
@@ -137,44 +110,17 @@ install: build-stamp
 	
 	tar cjf debian/$(SKPG)/usr/src/$(PREFIX).tar.bz2 \
 	  -C $(TARPARDIR) modules
-	dh_installudev --name=dahdi
-	
-# Build architecture-independent files here.
-binary: install
-	dh_testdir
-	dh_testroot
-	
-	dh_installdocs
-	dh_installchangelogs -i ChangeLog
-	dh_installexamples -i
-	dh_perl
-	dh_link
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
+
+override_dh_auto_test:
 
 print-version:
 	@@echo "Debian version:          $(DEBVERSION)"
 	@@echo "Upstream version:        $(UPVERSION)"
 
-TARBALL_DIR=../tarballs/$(PACKAGE_SRC)-$(UPVERSION).tmp
 get-orig-source:
 	@@dh_testdir
-	@@[ -d ../tarballs/. ]||mkdir -p ../tarballs
-	@@echo Downloading $(UPFILENAME) from $(URL) ...
-	@@wget  -nv -T10 -t3 --verbose -O ../tarballs/$(UPFILENAME) $(URL)
-	@@echo Repacking as DFSG-free...
-	@@mkdir -p $(TARBALL_DIR)/
-	@@cd $(TARBALL_DIR) ; \
-	tar xfz ../$(UPFILENAME)
-	@@rm -rf $(TARBALL_DIR)/$(PACKAGE_SRC)-$(UPVERSION)/drivers/dahdi/xpp/firmwares/*.hex
-	@@cd $(TARBALL_DIR) ; \
-	tar cfz ../$(FILENAME) *
-	@@echo Cleaning up...
-	@@$(RM) -rf $(TARBALL_DIR)/
-	@@$(RM) -f ../tarballs/$(UPFILENAME)
-
-.PHONY: build clean binary install configure patch unpatch
+	@@[ -d ../tarballs/. ] || mkdir -p ../tarballs
+	@@if [ ! -f ../tarballs/$(FILENAME) ]; then \
+		echo Downloading $(FILENAME) from $(URL) ...; \
+		wget -nv -T10 -t3 -O ../tarballs/$(FILENAME) $(URL); \
+	fi
