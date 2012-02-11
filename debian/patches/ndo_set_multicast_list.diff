@@ -1,0 +1,43 @@
+From: Shaun Ruffell <sruffell@digium.com>
+Subject: wctc4xxp: Replace 'ndo_set_multicast_list' with 'set_rx_mode'
+ The ndo_set_multicast_list callback was removed in b81693d9, which was
+ first released in Linux Kernel 3.2-rc1
+Origin: upstream, http://svnview.digium.com/svn/dahdi?view=revision&revision=10362
+--- a/drivers/dahdi/wctc4xxp/base.c
++++ b/drivers/dahdi/wctc4xxp/base.c
+@@ -488,6 +488,7 @@ wctc4xxp_skb_to_cmd(struct wcdte *wc, co
+ 	return cmd;
+ }
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 2, 0)
+ static void
+ wctc4xxp_net_set_multi(struct net_device *netdev)
+ {
+@@ -495,6 +496,15 @@ wctc4xxp_net_set_multi(struct net_device
+ 	DTE_DEBUG(DTE_DEBUG_GENERAL, "%s promiscuity:%d\n",
+ 	   __func__, netdev->promiscuity);
+ }
++#else
++static void
++wctc4xxp_set_rx_mode(struct net_device *netdev)
++{
++	struct wcdte *wc = wcdte_from_netdev(netdev);
++	DTE_DEBUG(DTE_DEBUG_GENERAL, "%s promiscuity:%d\n",
++	   __func__, netdev->promiscuity);
++}
++#endif
+ 
+ static int
+ wctc4xxp_net_up(struct net_device *netdev)
+@@ -658,7 +668,11 @@ wctc4xxp_net_ioctl(struct net_device *ne
+ 
+ #ifdef HAVE_NET_DEVICE_OPS
+ static const struct net_device_ops wctc4xxp_netdev_ops = {
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 2, 0)
+ 	.ndo_set_multicast_list = &wctc4xxp_net_set_multi,
++#else
++	.ndo_set_rx_mode = &wctc4xxp_set_rx_mode,
++#endif
+ 	.ndo_open = &wctc4xxp_net_up,
+ 	.ndo_stop = &wctc4xxp_net_down,
+ 	.ndo_start_xmit = &wctc4xxp_net_hard_start_xmit,

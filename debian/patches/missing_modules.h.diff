@@ -1,0 +1,35 @@
+From: Shaun Ruffell <sruffell@digium.com>
+Subject: #include <linux/module.h> in dahdi/kernel.h and GpakCust.h 
+ Commit de47725, first released in 3.2-rc1 removed module.h from some
+ kernel headers. Include it explicitly now.
+ .
+ Resolves compilation errors like:
+ * error: implicit declaration of function 'try_module_get'
+ * error: 'THIS_MODULE' undeclared (first use in this function)
+ * error: implicit declaration of function 'module_put'
+Origin: upstream, http://svnview.digium.com/svn/dahdi?view=revision&revision=10363
+Index: dahdi-linux-2.5.0.1+dfsg/include/dahdi/kernel.h
+===================================================================
+--- dahdi-linux-2.5.0.1+dfsg.orig/include/dahdi/kernel.h	2012-02-07 16:36:48.482751165 -0500
++++ dahdi-linux-2.5.0.1+dfsg/include/dahdi/kernel.h	2012-02-07 16:36:59.858746074 -0500
+@@ -43,6 +43,7 @@
+ #endif
+ #include <linux/fs.h>
+ #include <linux/kobject.h>
++#include <linux/module.h>
+ #include <linux/ioctl.h>
+ 
+ #ifdef CONFIG_DAHDI_NET	
+Index: dahdi-linux-2.5.0.1+dfsg/drivers/dahdi/voicebus/GpakCust.h
+===================================================================
+--- dahdi-linux-2.5.0.1+dfsg.orig/drivers/dahdi/voicebus/GpakCust.h	2011-06-02 16:03:20.000000000 -0400
++++ dahdi-linux-2.5.0.1+dfsg/drivers/dahdi/voicebus/GpakCust.h	2012-02-07 16:37:28.830734088 -0500
+@@ -36,6 +36,7 @@
+ #ifndef _GPAKCUST_H  /* prevent multiple inclusion */
+ #define _GPAKCUST_H
+ 
++#include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/completion.h>
+ #include <linux/workqueue.h>
+ifdef CONFIG_DAHDI_NET	
