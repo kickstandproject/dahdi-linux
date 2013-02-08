@@ -3,10 +3,10 @@ Section: comm
 Priority: optional
 Maintainer: Paul Belanger <paul.belanger@polybeacon.com>
 XSBC-Original-Maintainer: Debian VoIP Team <pkg-voip-maintainers@lists.alioth.debian.org>
-Build-Depends: debhelper (>= 7),
+Build-Depends: debhelper (>= 7.0.50~),
  bzip2,
  asciidoc
-Standards-Version: 3.9.1
+Standards-Version: 3.9.3
 Homepage: http://www.asterisk.org/
 Vcs-Git: git://github.com/kickstandproject/dahdi-linux.git
 Vcs-Browser: https://github.com/kickstandproject/dahdi-linux
@@ -40,7 +40,7 @@ Description: DAHDI telephony interface - source code for kernel driver
 Package: dahdi-dkms
 Section: devel
 Architecture: all
-Depends: dkms, make, libc6-dev, gcc, wget, gawk
+Depends: ${misc:Depends}, dkms, make, libc6-dev, gcc, wget, gawk
 Recommends: dahdi-linux
 Description: DAHDI telephony interface (dkms kernel driver)
  DAHDI (formly Zaptel) is an interface for telephony devices used by e.g.
