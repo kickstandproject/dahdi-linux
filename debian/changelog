@@ -1,5 +1,5 @@
-dahdi-linux (2:2.5.0.1-1kickstand0) UNRELEASED; urgency=low
+dahdi-linux (2:2.6.1-1kickstand0) UNRELEASED; urgency=low
 
   * Initial Release.
 
- -- Paul Belanger <paul.belanger@polybeacon.com>  Sat, 11 Feb 2012 17:23:49 -0500
+ -- Paul Belanger <paul.belanger@polybeacon.com>  Fri, 08 Feb 2013 13:24:22 -0500
